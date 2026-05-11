@@ -33,7 +33,9 @@ Route::middleware('auth')->group(function () {
 
     // category
     Route::get('/admin/categories', [CategoryController::class, 'show_categories'])->name('admin.show_categories');
-
+    Route::get('/admin/categories/create',[CategoryController::class,'create_category'])->name('admin.create_category');
+    Route::post('/admin/categories/create',[CategoryController::class,'store_category'])->name('admin.store_category');
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

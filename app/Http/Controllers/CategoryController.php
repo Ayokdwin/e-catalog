@@ -11,4 +11,18 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('admin.category', compact('categories'));
     }
+    public function create_category(){
+        return view('admin.create_category');
+    }
+    public function store_category(Request $request){
+        $request->validate([
+            'name'=> 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories,slug',
+        ]);
+        $category = Category::create([
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ]);
+        return redirect()->route('admin.show_categories')->with('success', 'Category created successfully');    
+}
 }
