@@ -358,78 +358,267 @@
 
         <!-- Estimasi -->
         <section id="estimasi" class="section" style="background: var(--brand-soft)">
-            <div class="max-w-7xl mx-auto px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <h2 class="heading-md">Hitung Estimasi Hargamu</h2>
-                </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
-                <div class="max-w-2xl mx-auto">
-                    <div class="card p-8">
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Pilih Produk</label>
-                                <select id="product_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-[var(--brand)] focus:outline-none">
-                                    <option value="">Pilih produk</option>
-                                    @foreach($products as $produk)
-                                        <option value="{{ $produk->id }}" data-price="{{ $produk->min('base_price') ?? 0 }}">{{ $produk->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+        <!-- Heading -->
+        <div class="text-center mb-12">
+            <h2 class="heading-md">
+                Hitung Estimasi Hargamu
+            </h2>
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Pilih Material</label>
-                                <select id="material_id" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-[var(--brand)] focus:outline-none">
-                                    <option value="">Pilih material</option>
-                                    @foreach($materials as $material)
-                                        <option value="{{ $material->id }}" data-price="{{ $material->price_per_unit }}">{{ $material->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+            <p class="text-muted mt-3">
+                Simulasikan kebutuhan custom topimu secara realtime
+            </p>
+        </div>
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Jumlah / Qty</label>
-                                <input id="qty" type="number" min="1" value="24" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-[var(--brand)] focus:outline-none">
-                            </div>
+        <!-- Card -->
+        <div class="max-w-2xl mx-auto">
 
-                            <div>
-                                <label class="block text-sm font-semibold mb-2">Teknik Branding</label>
-                                <div class="space-y-2">
-                                    @forelse($estimation_factors as $factor)
-                                        <label class="flex items-center gap-3">
-                                            <input type="checkbox" class="estimation-extra rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]" value="{{ $factor->id }}" data-price="{{ $factor->extra_cost }}" data-name="{{ $factor->name }}">
-                                            <span class="text-sm">{{ $factor->name }}</span>
-                                        </label>
-                                    @empty
-                                        <label class="flex items-center gap-3">
-                                            <input type="checkbox" class="estimation-extra rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]" data-price="2500" data-name="Bordir 2D">
-                                            <span class="text-sm">Bordir 2D</span>
-                                        </label>
-                                        <label class="flex items-center gap-3">
-                                            <input type="checkbox" class="estimation-extra rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]" data-price="3500" data-name="Bordir 3D">
-                                            <span class="text-sm">Bordir 3D</span>
-                                        </label>
-                                        <label class="flex items-center gap-3">
-                                            <input type="checkbox" class="estimation-extra rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]" data-price="2000" data-name="Sablon DTF">
-                                            <span class="text-sm">Sablon DTF</span>
-                                        </label>
-                                    @endforelse
-                                </div>
-                            </div>
-                        </div>
+            <div class="card p-8 rounded-2xl shadow-lg bg-white">
 
-                        <div class="bg-[var(--brand-soft)] p-6 rounded-lg mb-6">
-                            <div class="text-sm font-semibold text-[var(--brand)] mb-2">ESTIMASI TOTAL</div>
-                            <div id="estimation-total" class="text-3xl font-bold">Rp 0</div>
-                            <div id="estimation-breakdown" class="text-sm text-muted mt-2">Pilih spesifikasi untuk melihat simulasi harga</div>
-                        </div>
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
 
-                        <a id="wa-order-link" href="https://wa.me/6289528866133?text=Halo, saya ingin estimasi harga custom topi." class="btn-primary w-full text-center block">
-                            Pesan via WA
-                        </a>
+                    <!-- Product -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            Pilih Produk
+                        </label>
+
+                        <select id="product_id"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/20 focus:outline-none">
+
+                            <option value="">
+                                Pilih produk
+                            </option>
+
+                            @foreach($products as $produk)
+                                <option
+                                    value="{{ $produk->id }}"
+                                    data-price="{{ $produk->base_price ?? 0 }}">
+
+                                    {{ $produk->name }}
+
+                                </option>
+                            @endforeach
+
+                        </select>
                     </div>
+
+                    <!-- Material -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            Pilih Material
+                        </label>
+
+                        <select id="material_id"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/20 focus:outline-none">
+
+                            <option value="">
+                                Pilih material
+                            </option>
+
+                            @foreach($materials as $material)
+                                <option
+                                    value="{{ $material->id }}"
+                                    data-price="{{ $material->price_per_unit }}"
+                                    data-name="{{ $material->name }}">
+
+                                    {{ $material->name }}
+                                    — Rp {{ number_format($material->price_per_unit,0,',','.') }}/pcs
+
+                                </option>
+                            @endforeach
+
+                        </select>
+
+                        <!-- Material Info -->
+                        <div id="material-price-info"
+                            class="mt-2 text-sm text-[var(--brand)] font-medium">
+                        </div>
+                    </div>
+
+                    <!-- Qty -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            Jumlah / Qty
+                        </label>
+
+                        <input
+                            id="qty"
+                            type="number"
+                            min="24"
+                            value="24"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:border-[var(--brand)] focus:ring-2 focus:ring-[var(--brand)]/20 focus:outline-none">
+
+                        <!-- Warning -->
+                        <div id="qty-warning"
+                            class="hidden mt-2 text-sm text-red-500 font-medium">
+
+                            Minimum order 24 pcs
+
+                        </div>
+
+                        <!-- Tier Badge -->
+                        <div id="package-tier"
+                            class="mt-3 inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-[var(--brand-soft)] text-[var(--brand)] border border-[var(--brand)]/20">
+
+                            Paket Starter
+
+                        </div>
+                    </div>
+
+                    <!-- Branding -->
+                    <div>
+                        <label class="block text-sm font-semibold mb-3">
+                            Teknik Branding
+                        </label>
+
+                        <div class="space-y-3">
+
+                            @forelse($estimation_factors as $factor)
+
+                                <label class="flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:border-[var(--brand)] cursor-pointer transition">
+
+                                    <input
+                                        type="checkbox"
+                                        class="estimation-extra rounded border-gray-300 text-[var(--brand)] focus:ring-[var(--brand)]"
+                                        value="{{ $factor->id }}"
+                                        data-price="{{ $factor->extra_cost }}"
+                                        data-name="{{ $factor->name }}">
+
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-medium">
+                                            {{ $factor->name }}
+                                        </span>
+
+                                        <span class="text-xs text-gray-500">
+                                            + Rp {{ number_format($factor->extra_cost,0,',','.') }}/pcs
+                                        </span>
+                                    </div>
+
+                                </label>
+
+                            @empty
+
+                                <div class="text-sm text-gray-500">
+                                    Belum ada teknik branding tersedia
+                                </div>
+
+                            @endforelse
+
+                        </div>
+                    </div>
+
                 </div>
+
+                <!-- Result -->
+                <div class="bg-[var(--brand-soft)] p-6 rounded-2xl mb-6 border border-[var(--brand)]/10">
+
+                    <div class="text-sm font-semibold text-[var(--brand)] mb-2">
+                        ESTIMASI TOTAL
+                    </div>
+
+                    <div id="estimation-total"
+                        class="text-3xl font-bold text-gray-900">
+
+                        Rp 0
+
+                    </div>
+
+                    <div id="estimation-breakdown"
+                        class="text-sm text-muted mt-2">
+
+                        Pilih spesifikasi untuk melihat simulasi harga
+
+                    </div>
+
+                </div>
+
+                <!-- WA -->
+                <a id="wa-order-link"
+                    href="https://wa.me/6289528866133?text=Halo, saya ingin estimasi harga custom topi."
+                    class="btn-primary w-full text-center block rounded-xl">
+
+                    Pesan via WA
+
+                </a>
+
             </div>
-        </section>
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const qtyInput = document.getElementById('qty');
+    const packageTier = document.getElementById('package-tier');
+    const qtyWarning = document.getElementById('qty-warning');
+
+    const materialSelect = document.getElementById('material_id');
+    const materialPriceInfo = document.getElementById('material-price-info');
+
+    function updatePackageTier() {
+
+        const qty = parseInt(qtyInput.value) || 0;
+
+        // Minimum order
+        if (qty < 24) {
+
+            qtyWarning.classList.remove('hidden');
+
+        } else {
+
+            qtyWarning.classList.add('hidden');
+
+        }
+
+        // Package tier
+        if (qty >= 24 && qty <= 49) {
+
+            packageTier.innerHTML = 'Paket Starter';
+
+        } else if (qty >= 50 && qty <= 99) {
+
+            packageTier.innerHTML = 'Paket Medium';
+
+        } else if (qty >= 100) {
+
+            packageTier.innerHTML = 'Paket Bulk';
+
+        } else {
+
+            packageTier.innerHTML = '-';
+
+        }
+
+    }
+
+    function updateMaterialInfo() {
+
+        const selected = materialSelect.options[materialSelect.selectedIndex];
+
+        if (!selected.value) {
+
+            materialPriceInfo.innerHTML = '';
+            return;
+
+        }
+
+        const name = selected.dataset.name;
+        const price = parseInt(selected.dataset.price);
+
+        materialPriceInfo.innerHTML =
+            `${name} — Rp ${price.toLocaleString('id-ID')}/pcs`;
+
+    }
+
+    qtyInput.addEventListener('input', updatePackageTier);
+    materialSelect.addEventListener('change', updateMaterialInfo);
+
+    updatePackageTier();
+    updateMaterialInfo();
+</script>
 
         <!-- Alur Pemesanan -->
         <section class="section">

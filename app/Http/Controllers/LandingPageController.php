@@ -20,6 +20,7 @@ class LandingPageController extends Controller
         $estimation_factors = EstimationFactor::all();
         $quantity_tiers = QuantityTier::with('benefits')->get();
         
+        
         return view('welcome', compact('products', 'categories', 'materials', 'estimation_factors', 'quantity_tiers'));
     }
 }
