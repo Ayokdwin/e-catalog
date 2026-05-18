@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('admin.show_categories')" :active="request()->routeIs('admin.show_categories')">
                         {{ __('Manage Categories') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.tier')" :active="request()->routeIs('admin.tier')">
+                        {{ __('Manage Tier') }}
+                    </x-nav-link>
                 </div>
             </div>
 

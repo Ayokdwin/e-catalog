@@ -25,4 +25,9 @@ class CategoryController extends Controller
         ]);
         return redirect()->route('admin.show_categories')->with('success', 'Category created successfully');    
 }
+public function destroy_category($id){
+    $category = Category::findOrFail($id);
+    $category->delete();
+    return redirect()->route('admin.show_categories')->with('success', 'Category deleted successfully');
+}
 }

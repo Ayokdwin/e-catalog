@@ -72,7 +72,7 @@
                                             </a>
 
                                             <!-- Delete -->
-                                            <form action="" method="POST">
+                                            <form action="{{ route('admin.destroy_category', $item->id) }}" method="get">
                                                 @csrf
                                                 @method('DELETE')
 

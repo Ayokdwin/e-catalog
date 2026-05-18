@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TierController;
 
 
 Route::get('/',[LandingPageController::class,'index'])->name('index');
@@ -35,6 +36,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/categories', [CategoryController::class, 'show_categories'])->name('admin.show_categories');
     Route::get('/admin/categories/create',[CategoryController::class,'create_category'])->name('admin.create_category');
     Route::post('/admin/categories/create',[CategoryController::class,'store_category'])->name('admin.store_category');
+    Route::get('/admin/categories/{id}/delete',[CategoryController::class,'destroy_category'])->name('admin.destroy_category');
+
+    //tier
+    Route::get('/admin/tier',[TierController::class,'index'])->name('admin.tier');
+    Route::get('/admin/tier/create',[TierController::class,'create'])->name('admin.create_tier');
+    Route::post('/admin/tier/create',[TierController::class,'store'])->name('admin.store_tier');
+    Route::get('/admin/tier/{id}', [TierController::class, 'destroy'])->name('admin.destroy_tier');
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
