@@ -66,7 +66,7 @@
                                         <div class="flex items-center justify-center gap-2">
 
                                             <!-- Edit -->
-                                            <a href=""
+                                            <a href="{{ route('admin.edit_category', $item->id) }}"
                                                class="px-4 py-2 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500 transition shadow-sm">
                                                 Edit
                                             </a>

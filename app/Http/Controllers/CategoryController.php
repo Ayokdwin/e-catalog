@@ -30,4 +30,22 @@ public function destroy_category($id){
     $category->delete();
     return redirect()->route('admin.show_categories')->with('success', 'Category deleted successfully');
 }
+public function edit_category($id){
+    $category = Category::findOrFail($id);
+    return view('admin.edit_category', compact('category'));
+}
+public function update_category(Request $request, $id){
+    $request->validate([
+        'name'=>'required|string|max:255',
+        'slug'=>'required|string|max:255|unique:categories,slug,'.$id,
+    ]);
+    $category = Category::findOrFail($id);
+    $category->update([
+        'name' => $request->name,
+        'slug' => $request->slug,
+    ]);
+    return redirect()->route('admin.show_categories')->with('success', 'Category updated successfully');
+
+}
+
 }
